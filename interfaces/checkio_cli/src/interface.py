@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 import json
 import atexit
+import time
 
 from handlers.base import BaseHandler
 from server import TCPConsoleServer
@@ -29,6 +30,7 @@ class FightHandler(BaseHandler):
             global MAP_X
             MAP_X = gg['MAP_X']
         self.ROUTING['battle'] = 'handler_battle'
+        self.last_print_time = 0
         if not os.path.exists(LOG_DIRNAME):
             os.mkdir(LOG_DIRNAME)
         log_filename = "battle_log_{}.json".format(str(datetime.now()))
@@ -55,6 +57,10 @@ class FightHandler(BaseHandler):
             print('DONE!')
             self.write_log(data)
             return
+        if 'winner' not in data['status'] and self.last_print_time + 0.3 > time.time():
+            return
+        self.last_print_time = time.time()
+
         out_map = []
         # temporarily spike (I know about "temporarily" (we have ticket for this))
         map_size = [t + 1 for t in data['map_size']]
