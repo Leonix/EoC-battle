@@ -108,6 +108,9 @@ class FightHandler(BaseHandler):
             print('{num:<{size}}'.format(num=i, size=MAP_X * 2), end='')
         print()
         for num, line in enumerate(out_map):
+            # Ignore uninhabited part of the map
+            if num < len(out_map) / 2:
+                continue
             if num % MAP_X:
                 out_line = '  '
             else:
