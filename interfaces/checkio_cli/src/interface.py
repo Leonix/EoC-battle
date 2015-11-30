@@ -104,7 +104,7 @@ class FightHandler(BaseHandler):
         print('-' * 20)
         print('-' * 30)
         print('  ', end='')
-        for i in range(map_size[0]):
+        for i in range(map_size[0] - 1, -1, -1):
             print('{num:<{size}}'.format(num=i, size=MAP_X * 2), end='')
         print()
         for num, line in enumerate(out_map):
@@ -115,7 +115,7 @@ class FightHandler(BaseHandler):
                 out_line = '  '
             else:
                 out_line = '{:>2}'.format(num // MAP_X)
-            for el in line:
+            for el in reversed(line):
                 if el is None:
                     out_line += '..'
                 elif el == MAP_BUILDING:
