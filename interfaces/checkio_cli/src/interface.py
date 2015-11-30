@@ -125,15 +125,16 @@ class FightHandler(BaseHandler):
             print(out_line)
         craft_positions = [craft["coordinates"][1] for craft in data["craft_items"]]
 
-        craft_line = "  "
 
-        for i in range(len(out_map[0] if out_map else 0)):
-            pos = i / MAP_X
-            if any(p - 1 < pos < p + 1 for p in craft_positions):
-                craft_line += "^^"
-            else:
-                craft_line += "  "
-        print(craft_line + "\n" + craft_line)
+        if out_map:
+            craft_line = "  "
+            for i in range(len(out_map[0]) - 1, -1, -1):
+                pos = i / MAP_X
+                if any(p - 1 < pos < p + 1 for p in craft_positions):
+                    craft_line += "^^"
+                else:
+                    craft_line += "  "
+            print(craft_line + "\n" + craft_line)
 
         for num, player in players_groups.items():
 
