@@ -611,9 +611,9 @@ class FightHandler(BaseHandler):
 
         for key, fighter in self.fighters.items():
             for sub_item in list(fighter.get_sub_items()):
+                sub_item.do_frame_action()
                 if sub_item.is_dead:
                     fighter.remove_sub_item(sub_item)
-                sub_item.do_frame_action()
             # WHY: can't we move in the FightItem class?
             # When in can be None?
             if fighter.is_dead:
