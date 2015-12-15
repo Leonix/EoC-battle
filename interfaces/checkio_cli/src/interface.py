@@ -58,6 +58,15 @@ class FightHandler(BaseHandler):
             self.write_log(data)
             return
         if 'winner' not in data['status'] and self.last_print_time + 0.3 > time.time():
+            # Print unit output even it the frame is skipped
+            for item in data['fight_items']:
+                if 'std' in item and any(item['std'].values()):
+                    print('{:<10}'.format(item['id']), end='')
+                    print('-' * 20)
+                    if item['std']['out']:
+                        print(''.join(item['std']['out']))
+                    if item['std']['err']:
+                        print(''.join(item['std']['err']), file=sys.stderr)
             return
         self.last_print_time = time.time()
 
